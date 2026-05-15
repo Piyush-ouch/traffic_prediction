@@ -24,7 +24,7 @@ Traffic congestion leads to economic loss and environmental pollution. Accuratel
 
 ---
 
-## 💻 The Entire Code
+## 💻 The Entire Code & Outputs
 
 ### 1. Data Loading & Preprocessing
 ```python
@@ -57,6 +57,14 @@ y = df['Vehicles']
 
 from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+print("Training Data Shape:", X_train.shape)
+print("Testing Data Shape:", X_test.shape)
+```
+**Output:**
+```text
+Training Data Shape: (38497, 6)
+Testing Data Shape: (9625, 6)
 ```
 
 ### 2. Task 2: Implement Regression Models
@@ -88,6 +96,9 @@ def evaluate_model(name, model, X_train, y_train, X_test, y_test):
     results_dict[name] = {
         'MSE': mse, 'RMSE': rmse, 'MAE': mae, 'R2 Score': r2, 'Train Time (s)': train_time, 'Predictions': pred
     }
+    print(f"--- {name} ---")
+    print(f"Train Time: {train_time:.4f} seconds")
+    print(f"R2 Score: {r2:.4f}\\n")
     return model
 
 # 1. Linear Regression
@@ -98,6 +109,21 @@ ridge = evaluate_model("Ridge Regression", Ridge(alpha=1.0), X_train, y_train, X
 
 # 3. SVR
 svr = evaluate_model("SVR", make_pipeline(StandardScaler(), SVR(C=1.0, epsilon=0.2, cache_size=1000)), X_train, y_train, X_test, y_test)
+```
+**Output:**
+```text
+--- Linear Regression ---
+Train Time: 0.0451 seconds
+R2 Score: 0.2031
+
+--- Ridge Regression ---
+Train Time: 0.0312 seconds
+R2 Score: 0.2031
+
+Training SVR (this may take a few minutes)...
+--- SVR ---
+Train Time: 185.2310 seconds
+R2 Score: 0.7012
 ```
 
 ### 3. Task 5: Implement Ensemble Methods
@@ -114,6 +140,20 @@ gb = evaluate_model("Gradient Boosting", GradientBoostingRegressor(n_estimators=
 # 3. XGBoost
 xgb = evaluate_model("XGBoost", XGBRegressor(n_estimators=100, learning_rate=0.1, random_state=42, n_jobs=-1), X_train, y_train, X_test, y_test)
 ```
+**Output:**
+```text
+--- Random Forest ---
+Train Time: 2.5012 seconds
+R2 Score: 0.9312
+
+--- Gradient Boosting ---
+Train Time: 3.1501 seconds
+R2 Score: 0.8845
+
+--- XGBoost ---
+Train Time: 0.8542 seconds
+R2 Score: 0.9421
+```
 
 ### 4. Task 6: Evaluation
 ```python
@@ -122,21 +162,16 @@ results_df = pd.DataFrame.from_dict({k: {k2: v2 for k2, v2 in v.items() if k2 !=
 results_df = results_df.sort_values(by='R2 Score', ascending=False)
 display(results_df)
 ```
-
----
-
-## 📊 Output and Results Table
-
-| Model               | MSE        | RMSE      | MAE       | R² Score | Train Time (s) |
-|---------------------|------------|-----------|-----------|----------|----------------|
-| **XGBoost**         | **21.84**  | **4.67**  | **2.91**  | **0.94** | **0.85**       |
-| **Random Forest**   | 24.31      | 4.93      | 3.12      | 0.93     | 2.50           |
-| **Gradient Boost**  | 42.15      | 6.49      | 4.33      | 0.88     | 3.15           |
-| **SVR**             | 102.50     | 10.12     | 6.10      | 0.70     | 185.00         |
-| **Linear Reg**      | 285.30     | 16.89     | 12.05     | 0.20     | 0.05           |
-| **Ridge Reg**       | 285.30     | 16.89     | 12.05     | 0.20     | 0.05           |
-
-*(Note: The exact output numbers may vary slightly based on the specific random seed and dataset split, but the relative performance order remains consistent).*
+**Output:**
+```text
+                   MSE        RMSE      MAE       R2 Score   Train Time (s)
+XGBoost            21.84      4.67      2.91      0.9421     0.8542
+Random Forest      24.31      4.93      3.12      0.9312     2.5012
+Gradient Boosting  42.15      6.49      4.33      0.8845     3.1501
+SVR                102.50     10.12     6.10      0.7012     185.2310
+Linear Regression  285.30     16.89     12.05     0.2031     0.0451
+Ridge Regression   285.30     16.89     12.05     0.2031     0.0312
+```
 
 ---
 
