@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intelligent Traffic Flow Prediction</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="background-mesh"></div>
+    
+    <div class="container">
+        <header>
+            <h1>Traffic Flow <span>Prediction</span></h1>
+            <p>Intelligent Transportation System powered by ML</p>
+        </header>
+
+        <main class="glass-card">
+            <form action="/predict" method="post" id="prediction-form">
+                <div class="input-group">
+                    <label for="junction">Select Junction</label>
+                    <select name="junction" id="junction" required>
+                        <option value="" disabled selected>Choose a junction...</option>
+                        <option value="1">Junction 1</option>
+                        <option value="2">Junction 2</option>
+                        <option value="3">Junction 3</option>
+                        <option value="4">Junction 4</option>
+                    </select>
+                </div>
+
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="date">Prediction Date</label>
+                        <input type="date" name="date" id="date" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="time">Time of Day</label>
+                        <input type="time" name="time" id="time" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="glow-on-hover">Analyze Traffic</button>
+            </form>
+
+            {% if result %}
+            <div class="result-container fade-in">
+                {% if result.success %}
+                <div class="alert-box" style="border-left-color: {{ result.color }}">
+                    <div class="alert-header">
+                        <h3>Traffic Level: <span style="color: {{ result.color }}">{{ result.level }}</span></h3>
+                    </div>
+                    <div class="alert-body">
+                        <p class="vehicle-count">{{ result.prediction }}</p>
+                        <p class="subtitle">Expected Vehicles</p>
+                    </div>
+                </div>
+                {% else %}
+                <div class="alert-box error">
+                    <p>Error: {{ result.error }}</p>
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+        </main>
+    </div>
+
+    <script>
+        // Set minimum date to today by default if no values exist
+        const dateInput = document.getElementById('date');
+        const timeInput = document.getElementById('time');
+        
+        if (!dateInput.value) {
+            dateInput.valueAsDate = new Date();
+        }
+        
+        if (!timeInput.value) {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            timeInput.value = `${hours}:${minutes}`;
+        }
+    </script>
+</body>
+</html>
