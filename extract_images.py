@@ -8,7 +8,7 @@ with open('notebooks/updated_traffic_prediction_v2.ipynb', 'r', encoding='utf-8'
     nb = json.load(f)
 
 img_count = 1
-image_names = ['feature_importance.png', 'metrics_comparison.png', 'actual_vs_predicted.png']
+image_names = ['feature_importance.png', 'metrics_comparison.png', 'actual_vs_predicted_lr.png', 'actual_vs_predicted_rf.png']
 
 for cell in nb.get('cells', []):
     for output in cell.get('outputs', []):
