@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traffic Flow Prediction - ML Poster</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0f172a;
+            --secondary: #1d4ed8;
+            --accent: #22c55e;
+            --dark: #1e293b;
+            --light: #f1f5f9;
+            --white: #ffffff;
+        }
+        
+        * { box-sizing: border-box; }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #94a3b8;
+            color: var(--dark);
+        }
+
+        /* A3 Landscape Poster Wrapper */
+        .poster {
+            width: 42cm;
+            height: 29.7cm;
+            background: var(--white);
+            margin: 1cm auto;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+            position: relative;
+            overflow: hidden;
+            border: 8px solid var(--primary);
+        }
+
+        /* Print overrides */
+        @page {
+            margin: 0;
+        }
+
+        @media print {
+            body { background: white; -webkit-print-color-adjust: exact; print-color-adjust: exact; margin: 0; }
+            .poster { 
+                margin: 0; 
+                width: 100vw; 
+                height: 100vh; 
+                box-shadow: none; 
+                border: none;
+            }
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--primary);
+            color: var(--white);
+            padding: 0 2cm;
+            height: 2.8cm;
+            border-bottom: 5px solid var(--secondary);
+        }
+        
+        .header-text h1 {
+            margin: 0;
+            font-size: 2.3rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #60a5fa;
+            text-transform: uppercase;
+        }
+        
+        .header-text h2 {
+            margin: 0.2rem 0 0 0;
+            font-size: 1.3rem;
+            font-weight: 300;
+            color: #cbd5e1;
+        }
+
+        .header-logo {
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .header-logo img {
+            height: 75px;
+            border-radius: 8px;
+            background: white;
+            padding: 5px;
+        }
+
+        /* Grid Layout */
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1.2fr;
+            gap: 0.8cm;
+            padding: 0.5cm 1.5cm;
+            flex-grow: 1;
+        }
+
+        /* Section Cards */
+        .section {
+            background: var(--white);
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 0.4cm;
+        }
+
+        .section-title {
+            background: var(--secondary);
+            color: var(--white);
+            padding: 0.4rem 0.8rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            border-radius: 6px;
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            letter-spacing: 0.5px;
+        }
+
+        .section-content {
+            font-size: 1rem;
+            line-height: 1.4;
+            padding: 0 0.5rem;
+        }
+
+        ul { margin-top: 0.3rem; padding-left: 1.5rem; }
+        li { margin-bottom: 0.4rem; }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 0.2rem;
+            font-size: 0.95rem;
+        }
+        th, td { border: 1px solid #cbd5e1; padding: 6px; text-align: left; }
+        th { background-color: var(--secondary); color: white; }
+        tr:nth-child(even) { background-color: var(--light); }
+        .highlight { background-color: #dcfce7 !important; font-weight: bold; border-left: 4px solid var(--accent); }
+
+        /* Images */
+        .img-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: var(--light);
+            padding: 0.6rem;
+            border-radius: 8px;
+            margin-top: 0.5rem;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .img-card img {
+            width: 100%;
+            max-height: 170px;
+            object-fit: contain;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            background: white;
+        }
+        .img-caption {
+            margin-top: 0.4rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-align: center;
+            color: var(--secondary);
+        }
+
+        .badge {
+            background: var(--secondary);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            display: inline-block;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+
+        .highlight-box {
+            background: var(--light);
+            border-left: 5px solid var(--accent);
+            padding: 0.8rem;
+            border-radius: 0 8px 8px 0;
+            margin-top: 0.5rem;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="poster">
+        
+        <!-- HEADER -->
+        <header class="header">
+            <div class="header-text">
+                <h1>Traffic Flow Prediction</h1>
+                <h2>Optimizing Intelligent Transportation Systems via Machine Learning Ensembles</h2>
+            </div>
+            <div class="header-logo">
+                <img src="graphs/title_image.jpg" alt="Machine Learning Diagram">
+            </div>
+        </header>
+
+        <!-- 3-COLUMN GRID -->
+        <div class="grid-container">
+            
+            <!-- COLUMN 1: INTRO & DATA -->
+            <div class="column">
+                
+                <div class="section">
+                    <h3 class="section-title">1. Aim & Problem Statement</h3>
+                    <div class="section-content">
+                        <p><strong>Aim:</strong> To study how Machine Learning (ML) techniques can be used in Traffic Flow Prediction to improve Intelligent Transportation Systems (ITS) and drastically reduce urban traffic congestion.</p>
+                        <p><strong>The Problem:</strong> Traditional statistical prediction methods and baseline ML models fail to handle rapidly changing urban traffic conditions. Traffic flow is highly non-linear and depends on dynamic spatial-temporal factors:</p>
+                        <div style="margin: 1rem 0;">
+                            <span class="badge">Weather</span> <span class="badge">Time of Day</span> <span class="badge">Junctions</span> <span class="badge">Day of Week</span>
+                        </div>
+                        <p>Existing systems struggle to provide accurate real-time predictions and severely underfit when environmental patterns shift.</p>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3 class="section-title">2. Methodology & Dataset</h3>
+                    <div class="section-content">
+                        <p><strong>Systematic Literature Review (SLR):</strong> Research compiled from IEEE, ScienceDirect, and Elsevier analyzing the efficacy of Deep Learning, ANN, and Advanced Tree Ensembles.</p>
+                        <p><strong>Project Dataset Implementation:</strong></p>
+                        <ul>
+                            <li><strong>Source:</strong> Urban Traffic Prediction Dataset.</li>
+                            <li><strong>Size:</strong> 48,122 historical traffic records.</li>
+                            <li><strong>Feature Extraction:</strong> Raw <code>DateTime</code> strings were mathematically decomposed into engineered numerical cyclical features: <code>Year</code>, <code>Month</code>, <code>Day</code>, <code>Hour</code>.</li>
+                            <li><strong>Pre-processing:</strong> Anomalies removed, datasets split 80/20, and <code>StandardScaler</code> applied for distance-based ML algorithms.</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- COLUMN 2: MODELS & VISUALS -->
+            <div class="column">
+                
+                <div class="section">
+                    <h3 class="section-title">3. Algorithm Architectures</h3>
+                    <div class="section-content">
+                        <p>We implemented and reviewed multiple ML pipelines:</p>
+                        <ul>
+                            <li><strong>Linear/Ridge Regression:</strong> Baselines. Fit a single hyperplane, fundamentally underfitting temporal loops.</li>
+                            <li><strong>Support Vector Regression (SVR):</strong> Captures non-linearity using margins but scales poorly computationally (O(n<sup>2</sup>)).</li>
+                            <li><strong>Random Forest:</strong> Employs Bagging to aggregate hundreds of decision trees, capturing complex non-linear feature interactions (e.g., IF Hour=18 AND Day=Friday).</li>
+                            <li><strong>XGBoost:</strong> Sequential tree building utilizing built-in L1/L2 regularization.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3 class="section-title">4. Feature Importance</h3>
+                    <div class="section-content">
+                        <p>Which variables actually drive traffic congestion?</p>
+                        <div class="img-card">
+                            <img src="graphs/feature_importance.png" alt="Feature Importance">
+                            <div class="img-caption">Figure 1: Tree-based Feature Importance Analysis</div>
+                        </div>
+                        <p style="margin-top: 0.5rem; text-align: justify;"><strong>Analysis:</strong> The model undeniably proves that spatial location (<code>Junction</code>) and temporal daily cycles (<code>Hour</code>) are the dominant driving predictors of urban traffic volume.</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- COLUMN 3: RESULTS & CONCLUSION -->
+            <div class="column">
+                
+                <div class="section">
+                    <h3 class="section-title">5. Results & Metrics</h3>
+                    <div class="section-content">
+                        <p>Empirical evaluation of the models on the 20% validation split:</p>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Model</th>
+                                    <th>MSE</th>
+                                    <th>RMSE</th>
+                                    <th>R² Score</th>
+                                    <th>Latency</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="highlight">
+                                    <td><strong>Random Forest</strong></td>
+                                    <td>14.61</td>
+                                    <td>3.82</td>
+                                    <td>0.9641</td>
+                                    <td>0.35s</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>XGBoost</strong></td>
+                                    <td>24.07</td>
+                                    <td>4.90</td>
+                                    <td>0.9409</td>
+                                    <td>0.27s</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Gradient Boost</strong></td>
+                                    <td>40.06</td>
+                                    <td>6.32</td>
+                                    <td>0.9017</td>
+                                    <td>1.39s</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>SVR</strong></td>
+                                    <td>54.06</td>
+                                    <td>7.35</td>
+                                    <td>0.8673</td>
+                                    <td>36.28s</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Linear Reg.</strong></td>
+                                    <td>163.12</td>
+                                    <td>12.77</td>
+                                    <td>0.5997</td>
+                                    <td>0.02s</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3 class="section-title">6. Visualizing Accuracy</h3>
+                    <div class="section-content">
+                        <div class="img-card">
+                            <img src="graphs/actual_vs_predicted_rf.png" alt="Actual vs Predicted" style="max-height: 150px;">
+                            <div class="img-caption">Figure 2: Random Forest capturing non-linear traffic spikes</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3 class="section-title">7. Final Conclusions</h3>
+                    <div class="section-content">
+                        <div class="highlight-box">
+                            <p style="margin-top: 0;"><strong>1. Generalization vs Underfitting:</strong> Linear models failed entirely (~60% accuracy). The non-linear boundaries created by Decision Trees are essential for capturing cyclical traffic data.</p>
+                            <p><strong>2. Computational Complexity:</strong> Advanced models like SVR suffered from massive training latency (~36s), rendering them unviable for real-time scale. </p>
+                            <p><strong>3. Ultimate Winner:</strong> Highly optimized tree ensembles like <strong>Random Forest</strong> provided the ultimate balance, achieving a commanding <strong>96.41% prediction accuracy</strong> in just 0.35 seconds.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
