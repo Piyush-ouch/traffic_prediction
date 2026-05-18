@@ -122,6 +122,12 @@
         tr:nth-child(even) { background-color: var(--light); }
         .highlight { background-color: #d1fae5 !important; font-weight: bold;}
 
+        /* Compact table variant for tight slides */
+        .table-compact th, .table-compact td {
+            padding: 7px 10px;
+            font-size: 1rem;
+        }
+
         /* Images */
         .img-container {
             display: flex;
@@ -328,7 +334,7 @@
                     <tr><td><strong>SVR (Support Vector)</strong></td><td>Regression-based prediction. Captures some non-linearity but scales poorly (O(n<sup>2</sup>) complexity).</td></tr>
                     <tr><td><strong>Random Forest (Ensemble)</strong></td><td>Uses Bagging to build hundreds of decision trees. Excellent at capturing non-linear feature interactions (e.g., Time + Day).</td></tr>
                     <tr><td><strong>XGBoost / Gradient Boosting</strong></td><td>State-of-the-art sequential tree building utilizing parallel processing and built-in L1/L2 regularization to prevent overfitting.</td></tr>
-                    <tr><td><strong>ANN / CNN / LSTM / ARIMA</strong></td><td>Reviewed for spatial feature extraction (CNN), time-series prediction (LSTM/ARIMA), and generic pattern matching (ANN).</td></tr>
+                    <tr><td><strong>XGBoost / Gradient Boosting</strong></td><td>State-of-the-art sequential tree building utilizing parallel processing and built-in L1/L2 regularization to prevent overfitting.</td></tr>
                 </tbody>
             </table>
         </div>
@@ -337,69 +343,55 @@
 
     <!-- Slide 7: Performance Comparison Table -->
     <div class="slide">
-        <h2 class="slide-title">6. Performance Comparison Table</h2>
-        <h3 class="slide-subtitle">Metric-wise Evaluation Results</h3>
+        <h2 class="slide-title">6. Training vs Testing Accuracy Comparison</h2>
+        <h3 class="slide-subtitle">Overfitting Analysis — All Models Evaluated</h3>
         <div class="content">
-            <p>Evaluation of the implemented models across MSE, RMSE, MAE, R² Score, and Training Latency:</p>
-            <table style="margin-top: 1.5rem; font-size: 1.3rem;">
+            <p style="margin: 0.3rem 0 0.5rem 0;">Each model was evaluated on both the training set (80%) and the unseen testing set (20%) using R² Score:</p>
+            <table class="table-compact" style="margin-top: 0.3rem; font-size: 1.05rem; width: 100%;">
                 <thead>
                     <tr>
                         <th>Model</th>
-                        <th>MSE</th>
-                        <th>RMSE</th>
-                        <th>MAE</th>
-                        <th>R² Score</th>
-                        <th>Train Time (s)</th>
+                        <th>Training Accuracy (R²)</th>
+                        <th>Testing Accuracy (R²)</th>
+                        <th>Overfitting Analysis</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr class="highlight">
                         <td><strong>Random Forest</strong></td>
-                        <td>14.612851</td>
-                        <td>3.822676</td>
-                        <td>2.500123</td>
-                        <td>0.964144</td>
-                        <td>0.356427</td>
+                        <td><strong>98.37%</strong></td>
+                        <td><strong>96.41%</strong></td>
+                        <td>Slight Overfitting — Still highest overall performer</td>
                     </tr>
                     <tr>
                         <td><strong>XGBoost</strong></td>
-                        <td>24.072372</td>
-                        <td>4.906360</td>
-                        <td>2.893921</td>
-                        <td>0.940933</td>
-                        <td>0.274376</td>
+                        <td>94.55%</td>
+                        <td>94.09%</td>
+                        <td>Excellent Balance — No overfitting</td>
                     </tr>
                     <tr>
                         <td><strong>Gradient Boosting</strong></td>
-                        <td>40.061116</td>
-                        <td>6.329385</td>
-                        <td>4.011521</td>
-                        <td>0.901702</td>
-                        <td>1.390618</td>
+                        <td>90.25%</td>
+                        <td>90.17%</td>
+                        <td>Well Balanced — Good generalization</td>
                     </tr>
                     <tr>
                         <td><strong>SVR</strong></td>
-                        <td>54.061122</td>
-                        <td>7.352627</td>
-                        <td>4.372276</td>
-                        <td>0.867350</td>
-                        <td>36.283245</td>
+                        <td>86.81%</td>
+                        <td>86.73%</td>
+                        <td>Well Balanced — But incredibly slow to train</td>
                     </tr>
                     <tr>
                         <td><strong>Ridge Regression</strong></td>
-                        <td>163.123751</td>
-                        <td>12.771991</td>
-                        <td>9.637514</td>
-                        <td>0.599742</td>
-                        <td>0.032558</td>
+                        <td>60.18%</td>
+                        <td>59.97%</td>
+                        <td>Underfitting — Model is too simple</td>
                     </tr>
                     <tr>
                         <td><strong>Linear Regression</strong></td>
-                        <td>163.124844</td>
-                        <td>12.772034</td>
-                        <td>9.637676</td>
-                        <td>0.599740</td>
-                        <td>0.024666</td>
+                        <td>60.18%</td>
+                        <td>59.97%</td>
+                        <td>Underfitting — Same as Ridge</td>
                     </tr>
                 </tbody>
             </table>

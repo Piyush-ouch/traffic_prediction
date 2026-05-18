@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from sklearn.ensemble import RandomForestRegressor
+from xgboost import XGBRegressor
 import joblib
 
 print("Loading data...")
@@ -17,8 +17,8 @@ df['dayofweek'] = df['DateTime'].dt.dayofweek
 X = df[['Junction', 'year', 'month', 'day', 'hour', 'dayofweek']]
 y = df['Vehicles']
 
-print("Training RandomForest model...")
-model = RandomForestRegressor(n_estimators=50, max_depth=15, random_state=42, n_jobs=-1)
+print("Training XGBoost model...")
+model = XGBRegressor(n_estimators=100, learning_rate=0.1, random_state=42, n_jobs=-1)
 model.fit(X, y)
 
 print("Saving model to models/traffic_model.pkl...")

@@ -36,9 +36,169 @@ body {
 
 .container {
     width: 100%;
-    max-width: 500px;
+    max-width: 1100px;
     padding: 2rem;
     z-index: 1;
+}
+
+/* --- Metrics Section --- */
+.metrics-section {
+    margin-top: 3rem;
+    padding-bottom: 3rem;
+}
+
+.metrics-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 0.4rem;
+}
+
+.metrics-subtitle {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+}
+
+.metrics-cards {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.metric-card {
+    background: rgba(30, 41, 59, 0.85);
+    border: 1px solid var(--border);
+    border-radius: 1.2rem;
+    padding: 1.5rem 2rem;
+    max-width: 700px;
+    width: 100%;
+    position: relative;
+}
+
+.metric-card.winner {
+    border-color: #22c55e;
+    box-shadow: 0 0 30px rgba(34, 197, 94, 0.2);
+}
+
+.metric-badge {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #16a34a, #22c55e);
+    color: white;
+    padding: 4px 18px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.metric-card h3 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 1.2rem;
+    margin-top: 0.5rem;
+}
+
+.metric-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.metric-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(15, 23, 42, 0.5);
+    border-radius: 0.75rem;
+    padding: 0.8rem;
+    gap: 0.3rem;
+}
+
+.metric-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-align: center;
+}
+
+.metric-value {
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.metric-value.green { color: #22c55e; }
+
+/* Full Comparison Table */
+.metrics-table-wrapper {
+    overflow-x: auto;
+    border-radius: 1rem;
+    border: 1px solid var(--border);
+}
+
+.metrics-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.metrics-table thead tr {
+    background: rgba(59, 130, 246, 0.25);
+}
+
+.metrics-table th {
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+}
+
+.metrics-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.metrics-table tr:last-child td { border-bottom: none; }
+
+.metrics-table .row-winner {
+    background: rgba(34, 197, 94, 0.08);
+}
+
+.metrics-table .green { color: #22c55e; font-weight: 700; }
+
+.metrics-table tr:hover {
+    background: rgba(59, 130, 246, 0.08);
+    transition: background 0.2s;
+}
+
+/* Tags */
+.tag {
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.tag-overfit  { background: rgba(234, 179, 8,  0.2); color: #fbbf24; }
+.tag-balanced { background: rgba(34, 197, 94, 0.2); color: #4ade80; }
+.tag-slow     { background: rgba(239, 68, 68, 0.2); color: #f87171; }
+.tag-underfit { background: rgba(148, 163, 184, 0.2); color: #94a3b8; }
+
+.metrics-note {
+    margin-top: 1.5rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-align: center;
+    padding: 0 1rem;
+    line-height: 1.6;
 }
 
 header {

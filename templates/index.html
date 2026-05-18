@@ -63,6 +63,112 @@
             </div>
             {% endif %}
         </main>
+
+        <!-- Model Performance Section -->
+        <section class="metrics-section">
+            <h2 class="metrics-title">📊 Model Performance Comparison</h2>
+            <p class="metrics-subtitle">All models evaluated on 48,122 traffic records (80/20 train-test split)</p>
+
+            <div class="metrics-cards">
+                <div class="metric-card winner">
+                    <div class="metric-badge">⚡ Active Model</div>
+                    <h3>XGBoost</h3>
+                    <div class="metric-grid">
+                        <div class="metric-item"><span class="metric-label">Training Accuracy (R²)</span><span class="metric-value green">94.55%</span></div>
+                        <div class="metric-item"><span class="metric-label">Testing Accuracy (R²)</span><span class="metric-value green">94.09%</span></div>
+                        <div class="metric-item"><span class="metric-label">MSE</span><span class="metric-value">24.07</span></div>
+                        <div class="metric-item"><span class="metric-label">RMSE</span><span class="metric-value">4.91</span></div>
+                        <div class="metric-item"><span class="metric-label">MAE</span><span class="metric-value">2.89</span></div>
+                        <div class="metric-item"><span class="metric-label">Train Time</span><span class="metric-value">0.27s</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="metrics-table-wrapper">
+                <table class="metrics-table">
+                    <thead>
+                        <tr>
+                            <th>Model</th>
+                            <th>Training R²</th>
+                            <th>Testing R²</th>
+                            <th>MSE</th>
+                            <th>RMSE</th>
+                            <th>MAE</th>
+                            <th>Train Time</th>
+                            <th>Analysis</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Random Forest</strong></td>
+                            <td class="green">98.37%</td>
+                            <td class="green">96.41%</td>
+                            <td>14.61</td>
+                            <td>3.82</td>
+                            <td>2.50</td>
+                            <td>0.36s</td>
+                            <td><span class="tag tag-overfit">Slight Overfit</span></td>
+                        </tr>
+                        <tr class="row-winner">
+                            <td><strong>XGBoost ⚡ Active</strong></td>
+                            <td class="green">94.55%</td>
+                            <td class="green">94.09%</td>
+                            <td>24.07</td>
+                            <td>4.91</td>
+                            <td>2.89</td>
+                            <td>0.27s</td>
+                            <td><span class="tag tag-balanced">Excellent Balance</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Gradient Boosting</strong></td>
+                            <td>90.25%</td>
+                            <td>90.17%</td>
+                            <td>40.06</td>
+                            <td>6.33</td>
+                            <td>4.01</td>
+                            <td>1.39s</td>
+                            <td><span class="tag tag-balanced">Well Balanced</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>SVR</strong></td>
+                            <td>86.81%</td>
+                            <td>86.73%</td>
+                            <td>54.06</td>
+                            <td>7.35</td>
+                            <td>4.37</td>
+                            <td>36.28s</td>
+                            <td><span class="tag tag-slow">Very Slow</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ridge Regression</strong></td>
+                            <td>60.18%</td>
+                            <td>59.97%</td>
+                            <td>163.12</td>
+                            <td>12.77</td>
+                            <td>9.64</td>
+                            <td>0.03s</td>
+                            <td><span class="tag tag-underfit">Underfitting</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Linear Regression</strong></td>
+                            <td>60.18%</td>
+                            <td>59.97%</td>
+                            <td>163.12</td>
+                            <td>12.77</td>
+                            <td>9.64</td>
+                            <td>0.02s</td>
+                            <td><span class="tag tag-underfit">Underfitting</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p class="metrics-note">
+                <strong>Note:</strong> R² (R-Squared) measures accuracy for regression models (higher is better, max 1.0 = 100%).
+                MSE, RMSE &amp; MAE measure prediction error (lower is better).
+                F1, Precision &amp; Recall are classification metrics and do not apply to this regression task.
+            </p>
+        </section>
     </div>
 
     <script>
