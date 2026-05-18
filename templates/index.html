@@ -6,6 +6,7 @@
     <title>Intelligent Traffic Flow Prediction</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div class="background-mesh"></div>
@@ -63,6 +64,17 @@
             </div>
             {% endif %}
         </main>
+
+        <!-- Prediction History Chart -->
+        {% if history %}
+        <section class="history-section">
+            <h2 class="metrics-title">📈 Last {{ history|length }} Predictions</h2>
+            <p class="metrics-subtitle">Live traffic volume predictions from this session</p>
+            <div class="history-chart-wrapper glass-card">
+                <canvas id="historyChart" height="100"></canvas>
+            </div>
+        </section>
+        {% endif %}
 
         <!-- Model Performance Section -->
         <section class="metrics-section">
@@ -187,5 +199,49 @@
             timeInput.value = `${hours}:${minutes}`;
         }
     </script>
+
+    {% if history %}
+    <script>
+        const labels = {{ history | map(attribute='label') | list | tojson }};
+        const values = {{ history | map(attribute='value') | list | tojson }};
+        const colors = {{ history | map(attribute='color') | list | tojson }};
+
+        const ctx = document.getElementById('historyChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Predicted Vehicles',
+                    data: values,
+                    backgroundColor: colors.map(c => c + '99'),
+                    borderColor: colors,
+                    borderWidth: 2,
+                    borderRadius: 8,
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { labels: { color: '#f8fafc', font: { family: 'Inter', size: 13 } } },
+                    tooltip: {
+                        callbacks: {
+                            label: ctx => ` ${ctx.parsed.y} Vehicles`
+                        }
+                    }
+                },
+                scales: {
+                    x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                    y: {
+                        beginAtZero: true,
+                        ticks: { color: '#94a3b8' },
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        title: { display: true, text: 'Vehicles / Hour', color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+    </script>
+    {% endif %}
 </body>
 </html>
